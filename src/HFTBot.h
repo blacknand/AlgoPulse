@@ -33,4 +33,4 @@ private:
 public:
     HFTBot();
     void start();
-}
+};

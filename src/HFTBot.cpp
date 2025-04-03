@@ -1,5 +1,6 @@
 #include "HFTBot.h"
 
+
 void HFTBot::simulateMarketData() {
     while (running) {
         MarketData data{"AAPL", 150.0 + (rand() % 10) / 10.0, 150.5 + (rand() % 10) / 10.0,

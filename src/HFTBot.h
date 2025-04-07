@@ -1,3 +1,8 @@
+#ifndef HFT_BOT_H
+#define HFT_BOT_H
+
+#pragma once
+
 #include <iostream>
 #include <vector>
 #include <thread>
@@ -6,6 +11,8 @@
 #include <mutex>
 #include <boost/asio.hpp>
 #include <zmq.hpp>
+
+#include "DataIngestion.h"
 
 
 // Simulated market data structure
@@ -21,16 +28,18 @@ struct MarketData {
 
 class HFTBot {
 private:
-    zmq::context_t context{1};  // ZeroMQ context for messaging
-    zmq::socket_t socket{context, ZMQ_SUB};  // Subscriber socket
-    std::queue<MarketData> dataQueue;  // Queue for incoming data
-    std::mutex queueMutex;  // Thread safety
+    std::queue<MarketData> dataQueue;  
+    std::mutex queueMutex;             
     bool running = true;
 
-    void simulateMarketData();
     void processData();
     void detectAnomaly(const MarketData& data);
+
+    DataIngestion* ingestion;
 public:
     HFTBot();
+    ~HFTBot();
     void start();
 };
+
+#endif // HFT_BOT_H
